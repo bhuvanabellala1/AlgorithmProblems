@@ -1,4 +1,5 @@
 package graph;
+
 import java.util.*;
 
 /**
@@ -57,33 +58,34 @@ public class Snakes {
                 //Check all adjacent nodes
                 for (int i = 1; i < 7 && node + i <= 100; i++) {
 
+                    int addNode = node + i;
+
                     //If node hasn't already been visited
-                    if (numMoves[node + i] == Integer.MAX_VALUE) {
+                    if (numMoves[addNode] == Integer.MAX_VALUE) {
 
                         //In the ladder or snakes, add the to node
-                        if (ladder.containsKey(node + i)) {
+                        if (ladder.containsKey(addNode)) {
 
-                            numMoves[node + i] = numMoves[node] + 1;
-                            numMoves[ladder.get(node + i)] = numMoves[node] + 1;
-                            que.add(ladder.get(node + i));
+                            numMoves[addNode] = numMoves[node] + 1;
+                            numMoves[ladder.get(addNode)] = numMoves[node] + 1;
+                            addNode = ladder.get(node + i);
 
                         } else if (snakes.containsKey(node + i) &&
                                 numMoves[snakes.get(node + i)] == Integer.MAX_VALUE) {
 
                             numMoves[node + i] = numMoves[node] + 1;
                             numMoves[snakes.get(node + i)] = numMoves[node] + 1;
-                            que.add(snakes.get(node + i));
+                            addNode = snakes.get(node + i);
 
                         } else {
-
                             numMoves[node + i] = numMoves[node] + 1;
-                            que.add(node + i);
-
                         }
 
-                        if (i == 100) {
+                        que.add(addNode);
+                        if (addNode == 100) {
                             dest = true;
                         }
+
                     }
                 }
             }
